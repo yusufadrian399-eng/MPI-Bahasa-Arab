@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif: Bahasa Arab - Hobi</title>
+    <style>
+        /* CSS Variabel untuk Tema Hijau Islami dan Emas Elegan */
+        :root {
+            --primary-color: #0f766e; /* Hijau Teal Gelap */
+            --primary-light: #14b8a6; /* Hijau Teal Terang */
+            --secondary-color: #d97706; /* Emas/Amber Gelap */
+            --secondary-light: #f59e0b; /* Emas/Amber Terang */
+            --bg-color: #f0fdf4; /* Hijau Sangat Muda untuk Background */
+            --card-bg: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --success-color: #16a34a;
+            --error-color: #dc2626;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --arabic-font: 'Traditional Arabic', 'Amiri', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #cover-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #064e3b, var(--primary-color));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            overflow: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        /* Ornamen Background Text Arab */
+        .arabic-bg-ornament {
+            position: absolute;
+            font-family: var(--arabic-font);
+            color: white;
+            opacity: 0.05;
+            user-select: none;
+            pointer-events: none;
+            line-height: 1;
+        }
+        .ornament-1 { font-size: 25vw; top: -5%; left: -5%; transform: rotate(-15deg); }
+        .ornament-2 { font-size: 15vw; bottom: 10%; right: 5%; transform: rotate(10deg); }
+        .ornament-3 { font-size: 20vw; top: 40%; left: 30%; transform: rotate(5deg); opacity: 0.03; }
+
+        .cover-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            border-top: 6px solid var(--secondary-light);
+        }
+
+        .cover-title-arab {
+            font-family: var(--arabic-font);
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .cover-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        /* Form Controls (Select) */
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--text-dark);
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5rem;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+        }
+
+        .form-select:disabled {
+            background-color: #f3f4f6;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover { background-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
+        .btn-secondary { background-color: var(--secondary-color); }
+        .btn-secondary:hover { background-color: var(--secondary-light); }
+        .btn-block { display: block; width: 100%; }
+        
+        /* Cover specific button */
+        .btn-cover {
+            font-size: 1.1rem;
+            padding: 1rem;
+            border-radius: 50px;
+            background: linear-gradient(to right, var(--secondary-color), var(--secondary-light));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-cover:hover { background: linear-gradient(to right, var(--secondary-light), #fbbf24); }
+        
+        /* Logout button */
+        .btn-logout {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-logout:hover { background-color: rgba(255, 255, 255, 0.4); }
+
+        #main-app {
+            display: none; /* Disembunyikan sampai login dari cover */
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-bottom: 4px solid var(--secondary-light);
+        }
+
+        header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        header p { font-size: 0.9rem; opacity: 0.9; }
+
+        main {
+            flex: 1;
+            padding: 1.5rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 4px solid var(--primary-light);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 0.5rem;
+        }
+
+        .card-title { color: var(--primary-color); font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        h2, h3 { color: var(--primary-color); margin-bottom: 1rem; }
+        
+        .arabic-text {
+            font-family: var(--arabic-font);
+            font-size: 1.8rem;
+            line-height: 2.2;
+            text-align: right;
+            direction: rtl;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            border-right: 4px solid var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .indo-text {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-left: 4px solid var(--primary-light);
+            background-color: #f8fafc;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: none;
+        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            background-color: #e5e7eb; color: var(--text-dark); padding: 0.5rem 1rem;
+            border: none; border-radius: 20px; font-weight: 600; cursor: pointer;
+            white-space: nowrap; transition: all 0.2s;
+        }
+        .tab-btn.active { background-color: var(--primary-color); color: white; box-shadow: 0 2px 4px rgba(15, 118, 110, 0.3); }
+
+        /* Sections */
+        .section-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .section-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .interactive-container { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; }
+        @media (min-width: 600px) { .interactive-container { grid-template-columns: 1fr 1fr; } }
+
+        .vocab-item {
+            background-color: #f3f4f6; padding: 1rem; border-radius: 8px; text-align: center;
+            cursor: pointer; transition: all 0.2s; border: 2px solid transparent;
+        }
+        .vocab-item:hover { border-color: var(--secondary-light); background-color: #fffbeb; }
+        .vocab-item.selected { border-color: var(--primary-color); background-color: #e0f2fe; }
+        .vocab-arabic { font-family: var(--arabic-font); font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--primary-color); }
+
+        .question-card { background-color: #f8fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--primary-color); }
+        .options-list { list-style: none; margin-top: 1rem; }
+        .option-item { margin-bottom: 0.5rem; }
+        .option-label { display: flex; align-items: center; padding: 0.75rem 1rem; background-color: white; border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .option-label:hover { background-color: #f3f4f6; border-color: var(--primary-light); }
+        .option-input { margin-right: 1rem; width: 1.2rem; height: 1.2rem; cursor: pointer; accent-color: var(--primary-color); }
+        .option-input:checked + .option-text { font-weight: bold; color: var(--primary-color); }
+        .option-item.correct .option-label { background-color: #dcfce7; border-color: var(--success-color); color: #166534; }
+        .option-item.wrong .option-label { background-color: #fee2e2; border-color: var(--error-color); color: #991b1b; }
+
+        .feedback-box { display: none; padding: 1rem; border-radius: 8px; margin-top: 1rem; font-weight: 500; }
+        .feedback-box.show { display: block; animation: fadeIn 0.3s ease; }
+        .feedback-box.success { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+        .feedback-box.error { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+        .feedback-box.info { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+
+        .score-display {
+            text-align: center; font-size: 2rem; font-weight: bold; color: var(--primary-color);
+            padding: 1.5rem; background: linear-gradient(135deg, #f0fdf4, #ccfbf1);
+            border-radius: 50%; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem auto; border: 4px solid var(--secondary-light); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group { margin-bottom: 1rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--primary-color); }
+        .form-control { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; font-family: inherit; }
+        /* Readonly form control style for synced data */
+        .form-control[readonly] { background-color: #f3f4f6; color: #6b7280; border-color: #e5e7eb; cursor: default; }
+
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-color); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 1rem auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        footer { text-align: center; padding: 1.5rem 1rem; background-color: #1f2937; color: #9ca3af; font-size: 0.875rem; margin-top: auto; }
+
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 1rem; backdrop-filter: blur(5px); }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
+        .modal-content { background-color: white; padding: 2rem; border-radius: var(--border-radius); width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border-top: 6px solid var(--primary-color); }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: var(--text-light); border: none; background: none; line-height: 1; }
+        .close-modal:hover { color: var(--error-color); }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 1rem; margin-bottom: 1.5rem; }
+        .btn-edit-trigger { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 1.5rem; cursor: pointer; box-shadow: var(--shadow); transition: all 0.2s; z-index: 20; display: flex; align-items: center; justify-content: center; }
+        .btn-edit-trigger:hover { background: white; transform: scale(1.1); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body>
+
+    <div id="cover-page">
+        <!-- Ornamen Background -->
+        <div class="arabic-bg-ornament ornament-1">اللغة العربية</div>
+        <div class="arabic-bg-ornament ornament-2">الهِوَايَة</div>
+        <div class="arabic-bg-ornament ornament-3">بسم الله الرحمن الرحيم</div>
+
+        <div class="cover-card">
+            <button class="btn-edit-trigger" onclick="openEditModal()" title="Pengaturan Data Siswa">⚙️</button>
+
+            <div class="cover-title-arab">أَهْلًا وَسَهْلًا</div>
+            <div class="cover-subtitle">Media Interaktif Bahasa Arab (MTs)</div>
+            
+            <p style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                Silakan lengkapi data diri Anda sebelum memulai pembelajaran.
+            </p>
+
+            <select id="cover-kelas" class="form-select" onchange="populateStudents()">
+                <option value="" disabled selected>-- Pilih Kelas Anda --</option>
+                <option value="7A">Kelas 7A</option>
+                <option value="7B">Kelas 7B</option>
+                <option value="8A">Kelas 8A</option>
+                <option value="8B">Kelas 8B</option>
+                <option value="9">Kelas 9</option>
+            </select>
+
+            <select id="cover-nama" class="form-select" disabled>
+                <option value="" disabled selected>-- Pilih Nama Siswa --</option>
+                <!-- Opsi nama akan di-generate oleh JavaScript -->
+            </select>
+
+            <div id="cover-error" style="color: var(--error-color); margin-bottom: 1rem; display: none; font-weight: bold; font-size: 0.9rem;">
+                ⚠️ Harap pilih Kelas dan Nama!
+            </div>
+
+            <button class="btn btn-block btn-cover" onclick="enterApp()">Mulai Belajar ➡️</button>
+        </div>
+    </div>
+
+    <div id="main-app">
+        <header>
+            <h1>الهِوَايَة (Hobi)</h1>
+            <p>Bahasa Arab - MTs | Kanwil Kemenag Prov. Gorontalo</p>
+            <button class="btn-logout" onclick="logoutApp()" title="Ganti Siswa">🔄 Ganti Siswa</button>
+        </header>
+
+        <main>
+            <!-- Tab Navigation -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="showSection('intro')">Tujuan & Konteks</button>
+                <button class="tab-btn" onclick="showSection('materi')">Wacana & Kosakata</button>
+                <button class="tab-btn" onclick="showSection('eksplorasi')">Eksplorasi</button>
+                <button class="tab-btn" onclick="showSection('kuis')">Kuis Evaluasi</button>
+            </div>
+
+            <!-- Section: Intro -->
+            <section id="intro" class="section-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🌟 Pendahuluan</h2>
+                    </div>
+                    <p><strong>Ahlan wa Sahlan, <span id="welcome-name" class="highlight">Siswa</span>!</strong> Selamat datang di modul interaktif Bahasa Arab.</p>
+                    <br>
+                    <h3>🎯 Tujuan Pembelajaran:</h3>
+                    <ul style="padding-left: 1.5rem; margin-bottom: 1rem; color: var(--text-dark);">
+                        <li>Menyimpulkan gagasan utama dari wacana singkat tentang hobi (الهواية).</li>
+                        <li>Menemukan detail informasi dari teks bacaan.</li>
+                        <li>Mengaitkan hobi/bakat dengan rasa syukur kepada Allah SWT atas potensi diri, khususnya potensi yang selaras dengan kondisi alam Gorontalo.</li>
+                    </ul>
+                    
+                    <div style="background-color: #fffbeb; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--secondary-color); margin-top: 1rem;">
+                        <strong>💡 Pesan Inspiratif:</strong><br>
+                        Gorontalo dikenal dengan tanah agrarisnya yang subur (penghasil jagung) dan alamnya yang indah. Bakat atau hobi seperti berkebun, membaca, atau melukis alam adalah anugerah. Mengembangkan hobi yang positif adalah bentuk syukur kita atas nikmat akal dan keindahan ciptaan-Nya.
+                    </div>
+                    
+                    <div style="text-align: right; margin-top: 1.5rem;">
+                        <button class="btn" onclick="showSection('materi')">Mulai Belajar ➡️</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Materi -->
+            <section id="materi" class="section-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📖 Wacana: Hobi Hasan</h2>
+                    </div>
+                    <p style="margin-bottom: 1rem; font-style: italic;">Bacalah teks di bawah ini dengan teliti. Perhatikan gagasan utama dan informasi rincinya.</p>
+                    
+                    <div class="arabic-text">
+                        هَذَا حَسَنٌ. هُوَ طَالِبٌ فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ الْإِسْلَامِيَّةِ فِي جُوْرُوْنْتَالُوْ.
+                        لِحَسَنٍ هِوَايَاتٌ كَثِيْرَةٌ، مِنْهَا: الْقِرَاءَةُ، وَالرَّسْمُ، وَالزِّرَاعَةُ.
+                        فِي أَوْقَاتِ الْفَرَاغِ، حَسَنٌ يَقْرَأُ الْكُتُبَ، وَيَرْسُمُ الْمَنَاظِرَ الطَّبِيْعِيَّةَ الْجَمِيْلَةَ،
+                        وَيَزْرَعُ الذُّرَةَ فِي حَدِيْقَةِ بَيْتِهِ.
+                        حَسَنٌ يَشْكُرُ اللهَ عَلَى هَذِهِ النِّعْمَةِ وَالْمَوْهِبَةِ.
+                    </div>
+
+                    <div class="indo-text">
+                        <p><strong>Terjemahan Bantuan:</strong></p>
+                        <p>Ini Hasan. Dia seorang siswa di MTs di Gorontalo.</p>
+                        <p>Hasan memiliki banyak hobi, di antaranya: membaca, melukis, dan bertani/berkebun.</p>
+                        <p>Di waktu luang, Hasan membaca buku-buku, melukis pemandangan alam yang indah, dan menanam jagung di kebun rumahnya.</p>
+                        <p>Hasan bersyukur kepada Allah atas nikmat dan bakat ini.</p>
+                    </div>
+
+                    <div style="text-align: right; margin-top: 1.5rem;">
+                        <button class="btn" onclick="showSection('eksplorasi')">Lanjut ke Kosakata ➡️</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Eksplorasi -->
+            <section id="eksplorasi" class="section-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🔍 Eksplorasi Kosakata</h2>
+                    </div>
+                    <p>Mari pahami kosakata kunci. <strong>Klik pada kata bahasa Arab</strong> untuk melihat makna dan penjelasannya.</p>
+                    
+                    <div class="interactive-container" id="vocab-grid"></div>
+
+                    <div id="vocab-feedback" class="feedback-box info" style="margin-top: 1.5rem; text-align: center; min-height: 120px;">
+                        <em>Klik salah satu kotak di atas untuk melihat detail kosakata.</em>
+                    </div>
+
+                    <div style="text-align: right; margin-top: 1.5rem;">
+                        <button class="btn" onclick="showSection('kuis')">Uji Pemahaman ➡️</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Kuis -->
+            <section id="kuis" class="section-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📝 Kuis Evaluasi Formatif</h2>
+                    </div>
+                    <div id="quiz-intro">
+                        <p>Jawablah pertanyaan berikut berdasarkan wacana "Hobi Hasan". Evaluasi ini akan mengukur pemahaman Anda.</p>
+                        
+                        <!-- Form Data Diri (Otomatis terisi dari Cover) -->
+                        <div style="background-color: #f8fafc; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: 1px solid #e5e7eb;">
+                            <h3 style="margin-bottom: 1rem; color: var(--text-dark); font-size: 1.1rem; display: flex; justify-content: space-between; align-items: center;">
+                                Data Diri Peserta
+                                <span style="font-size: 0.8rem; background: var(--primary-light); color: white; padding: 2px 8px; border-radius: 10px;">Terkunci</span>
+                            </h3>
+                            <div class="form-group">
+                                <label for="siswa-nama">Nama Lengkap:</label>
+                                <input type="text" id="siswa-nama" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="siswa-kelas">Kelas:</label>
+                                <input type="text" id="siswa-kelas" class="form-control" readonly>
+                            </div>
+                            <p style="font-size: 0.8rem; color: var(--text-light); margin-top: -0.5rem;"><em>*Data diambil otomatis dari halaman awal.</em></p>
+                        </div>
+                        
+                        <button class="btn btn-block" style="margin-top: 1.5rem;" onclick="startQuiz()">Mulai Kuis</button>
+                    </div>
+
+                    <div id="quiz-area" style="display: none;">
+                        <div id="question-container" class="question-card"></div>
+                        <div id="quiz-feedback" class="feedback-box"></div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                            <span id="question-counter" style="color: var(--text-light); font-weight: bold;">Soal 1/5</span>
+                            <button id="next-btn" class="btn" onclick="nextQuestion()" disabled>Selanjutnya ➡️</button>
+                        </div>
+                    </div>
+
+                    <div id="quiz-saving" style="display: none; text-align: center; padding: 2rem;">
+                        <div class="loader"></div>
+                        <h3 style="color: var(--primary-color);">Menyimpan Jawaban...</h3>
+                    </div>
+
+                    <div id="quiz-result" style="display: none; text-align: center;">
+                        <h3>Hasil Evaluasi Anda</h3>
+                        <div class="score-display" id="final-score">0</div>
+                        <p id="score-message" style="margin-bottom: 1.5rem; font-weight: bold;"></p>
+                        
+                        <div style="text-align: left; background-color: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 1.5rem;">
+                            <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">Refleksi:</h4>
+                            <p>Seperti Hasan yang mensyukuri bakatnya, apa pun hobi positifmu, gunakanlah untuk kebaikan dan selalu bersyukur kepada Sang Pencipta.</p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Modul Interaktif Bahasa Arab MTs.</p>
+        </footer>
+    </div>
+
+    <div id="edit-siswa-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeEditModal()">×</button>
+            <h2 style="color: var(--primary-color); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px;">
+                ⚙️ Pengaturan Data Siswa
+            </h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                Ubah daftar nama siswa di bawah ini. Perubahan akan disimpan secara otomatis di peramban perangkat ini.
+            </p>
+
+            <div class="form-group">
+                <label for="admin-kelas-select">Pilih Kelas yang Ingin Diedit:</label>
+                <select id="admin-kelas-select" class="form-control" onchange="loadAdminClassData()">
+                    <option value="7A">Kelas 7A</option>
+                    <option value="7B">Kelas 7B</option>
+                    <option value="8A">Kelas 8A</option>
+                    <option value="8B">Kelas 8B</option>
+                    <option value="9">Kelas 9</option>
+                </select>
+            </div>
+
+            <div id="admin-students-grid" class="admin-grid">
+                <!-- Textbox akan digenerate otomatis oleh JavaScript -->
+            </div>
+
+            <button id="btn-save-admin" class="btn btn-block" onclick="saveAdminData()">💾 Simpan Daftar Nama</button>
+            
+            <div style="background-color: #f0fdf4; padding: 12px; border-radius: 8px; border-left: 4px solid var(--success-color); margin-top: 15px; font-size: 0.85rem; color: var(--text-dark); line-height: 1.4;">
+                <strong>💡 Info Data:</strong> Modul ini menggunakan teknologi <em>Local Storage</em>. Data nama yang Anda ubah akan tersimpan di peramban (browser) HP/Laptop ini dan <strong>tidak akan hilang meskipun halaman di-refresh</strong> (kecuali cache browser dibersihkan).
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA COVER & SISWA ---
+        // Data default sebagai cadangan jika belum ada data di Local Storage
+        const defaultDataSiswa = {
+            "7A": ["Nama Siswa 1", "Nama Siswa 2", "Nama Siswa 3", "Nama Siswa 4", "Nama Siswa 5", "Nama Siswa 6", "Nama Siswa 7", "Nama Siswa 8", "Nama Siswa 9", "Nama Siswa 10", "Nama Siswa 11", "Nama Siswa 12", "Nama Siswa 13", "Nama Siswa 14", "Nama Siswa 15", "Nama Siswa 16", "Nama Siswa 17", "Nama Siswa 18", "Nama Siswa 19", "Nama Siswa 20", "Nama Siswa 21", "Nama Siswa 22", "Nama Siswa 23", "Nama Siswa 24", "Nama Siswa 25", "Nama Siswa 26", "Nama Siswa 27", "Nama Siswa 28", "Nama Siswa 29", "Nama Siswa 30"],
+            "7B": ["Nama Siswa 1", "Nama Siswa 2", "Nama Siswa 3", "Nama Siswa 4", "Nama Siswa 5", "Nama Siswa 6", "Nama Siswa 7", "Nama Siswa 8", "Nama Siswa 9", "Nama Siswa 10", "Nama Siswa 11", "Nama Siswa 12", "Nama Siswa 13", "Nama Siswa 14", "Nama Siswa 15", "Nama Siswa 16", "Nama Siswa 17", "Nama Siswa 18", "Nama Siswa 19", "Nama Siswa 20", "Nama Siswa 21", "Nama Siswa 22", "Nama Siswa 23", "Nama Siswa 24", "Nama Siswa 25", "Nama Siswa 26", "Nama Siswa 27", "Nama Siswa 28", "Nama Siswa 29", "Nama Siswa 30"],
+            "8A": ["Nama Siswa 1", "Nama Siswa 2", "Nama Siswa 3", "Nama Siswa 4", "Nama Siswa 5", "Nama Siswa 6", "Nama Siswa 7", "Nama Siswa 8", "Nama Siswa 9", "Nama Siswa 10", "Nama Siswa 11", "Nama Siswa 12", "Nama Siswa 13", "Nama Siswa 14", "Nama Siswa 15", "Nama Siswa 16", "Nama Siswa 17", "Nama Siswa 18", "Nama Siswa 19", "Nama Siswa 20", "Nama Siswa 21", "Nama Siswa 22", "Nama Siswa 23", "Nama Siswa 24", "Nama Siswa 25", "Nama Siswa 26", "Nama Siswa 27", "Nama Siswa 28", "Nama Siswa 29", "Nama Siswa 30"],
+            "8B": ["Nama Siswa 1", "Nama Siswa 2", "Nama Siswa 3", "Nama Siswa 4", "Nama Siswa 5", "Nama Siswa 6", "Nama Siswa 7", "Nama Siswa 8", "Nama Siswa 9", "Nama Siswa 10", "Nama Siswa 11", "Nama Siswa 12", "Nama Siswa 13", "Nama Siswa 14", "Nama Siswa 15", "Nama Siswa 16", "Nama Siswa 17", "Nama Siswa 18", "Nama Siswa 19", "Nama Siswa 20", "Nama Siswa 21", "Nama Siswa 22", "Nama Siswa 23", "Nama Siswa 24", "Nama Siswa 25", "Nama Siswa 26", "Nama Siswa 27", "Nama Siswa 28", "Nama Siswa 29", "Nama Siswa 30"],
+            "9": ["Nama Siswa 1", "Nama Siswa 2", "Nama Siswa 3", "Nama Siswa 4", "Nama Siswa 5", "Nama Siswa 6", "Nama Siswa 7", "Nama Siswa 8", "Nama Siswa 9", "Nama Siswa 10", "Nama Siswa 11", "Nama Siswa 12", "Nama Siswa 13", "Nama Siswa 14", "Nama Siswa 15", "Nama Siswa 16", "Nama Siswa 17", "Nama Siswa 18", "Nama Siswa 19", "Nama Siswa 20", "Nama Siswa 21", "Nama Siswa 22", "Nama Siswa 23", "Nama Siswa 24", "Nama Siswa 25", "Nama Siswa 26", "Nama Siswa 27", "Nama Siswa 28", "Nama Siswa 29", "Nama Siswa 30"]
+        };
+
+        // Memuat data dari LocalStorage, jika kosong gunakan default
+        let dataSiswa = JSON.parse(localStorage.getItem('siswaDataObj'));
+        if (!dataSiswa) {
+            dataSiswa = defaultDataSiswa;
+            localStorage.setItem('siswaDataObj', JSON.stringify(dataSiswa));
+        }
+
+        // Pengecekan Sesi Login Aktif saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            const activeSession = JSON.parse(localStorage.getItem('activeStudentSession'));
+            if (activeSession && activeSession.nama && activeSession.kelas) {
+                // Jika ada sesi, lewati halaman cover dan langsung masuk ke aplikasi utama
+                document.getElementById('siswa-nama').value = activeSession.nama;
+                document.getElementById('siswa-kelas').value = activeSession.kelas;
+                document.getElementById('welcome-name').textContent = activeSession.nama;
+                
+                document.getElementById('cover-page').style.display = 'none';
+                document.getElementById('main-app').style.display = 'flex';
+                initVocabulary();
+            }
+        });
+
+        // Fungsi untuk mengisi dropdown nama berdasarkan kelas yang dipilih
+        function populateStudents() {
+            const kelasSelect = document.getElementById('cover-kelas');
+            const namaSelect = document.getElementById('cover-nama');
+            const selectedKelas = kelasSelect.value;
+            
+            if(selectedKelas !== "") {
+                namaSelect.disabled = false;
+                namaSelect.innerHTML = '<option value="" disabled selected>-- Pilih Nama Anda --</option>';
+                
+                // Ambil daftar nama sesuai kelas yang dipilih dari objek dataSiswa
+                const daftarNama = dataSiswa[selectedKelas] || [];
+                
+                // Masukkan daftar nama tersebut ke dalam opsi dropdown
+                daftarNama.forEach(nama => {
+                    // Jangan tampilkan opsi yang kosong
+                    if(nama.trim() !== "") {
+                        const option = document.createElement('option');
+                        option.value = nama;
+                        option.textContent = nama;
+                        namaSelect.appendChild(option);
+                    }
+                });
+            }
+        }
+
+        // Fungsi Transisi dari Cover ke Main App
+        function enterApp() {
+            const kelas = document.getElementById('cover-kelas').value;
+            const nama = document.getElementById('cover-nama').value;
+            const errorMsg = document.getElementById('cover-error');
+
+            if(!kelas || !nama) {
+                errorMsg.style.display = 'block';
+                // Memberikan efek getar pada form jika error
+                const card = document.querySelector('.cover-card');
+                card.style.transform = 'translatex(-10px)';
+                setTimeout(() => card.style.transform = 'translatex(10px)', 100);
+                setTimeout(() => card.style.transform = 'translatex(-10px)', 200);
+                setTimeout(() => card.style.transform = 'translatex(0)', 300);
+                return;
+            }
+
+            errorMsg.style.display = 'none';
+
+            // 1. Simpan sesi aktif ke Local Storage agar bertahan saat refresh
+            localStorage.setItem('activeStudentSession', JSON.stringify({kelas: kelas, nama: nama}));
+
+            // 2. Sinkronisasi data ke form Kuis (Readonly)
+            document.getElementById('siswa-nama').value = nama;
+            document.getElementById('siswa-kelas').value = kelas;
+            
+            // 3. Sapaan di halaman depan
+            document.getElementById('welcome-name').textContent = nama;
+
+            // 4. Efek Transisi Menghilangkan Cover
+            const coverPage = document.getElementById('cover-page');
+            const mainApp = document.getElementById('main-app');
+            
+            coverPage.style.opacity = '0';
+            setTimeout(() => {
+                coverPage.style.display = 'none';
+                mainApp.style.display = 'flex';
+                // Inisialisasi konten aplikasi
+                initVocabulary();
+            }, 500); // Sesuai durasi CSS transition
+        }
+
+        // Fungsi Logout (Keluar / Ganti Siswa)
+        function logoutApp() {
+            // Hapus sesi aktif
+            localStorage.removeItem('activeStudentSession');
+            // Muat ulang halaman untuk kembali ke cover
+            window.location.reload();
+        }
+
+        // --- NAVIGATION LOGIC ---
+        function showSection(sectionId) {
+            document.querySelectorAll('.section-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            const targetTab = document.querySelector(`.tab-btn[onclick="showSection('${sectionId}')"]`);
+            if(targetTab) targetTab.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- VOCABULARY LOGIC ---
+        const vocabulary = [
+            { arab: 'هِوَايَةٌ', indo: 'Hobi', icon: '🎨', detail: 'Hobi adalah kegiatan yang dilakukan di waktu luang untuk kesenangan.' },
+            { arab: 'الْقِرَاءَةُ', indo: 'Membaca', icon: '📖', detail: 'Membaca adalah jendela dunia.' },
+            { arab: 'الرَّسْمُ', indo: 'Melukis', icon: '🖌️', detail: 'Mengekspresikan keindahan alam.' },
+            { arab: 'الزِّرَاعَةُ', indo: 'Bertani', icon: '🌱', detail: 'Melatih kesabaran dan kemandirian.' },
+            { arab: 'الذُّرَةُ', indo: 'Jagung', icon: '🌽', detail: 'Komoditas pertanian utama Gorontalo.' },
+            { arab: 'يَشْكُرُ', indo: 'Bersyukur', icon: '🤲', detail: 'Berterima kasih atas anugerah Allah.' }
+        ];
+
+        function initVocabulary() {
+            const grid = document.getElementById('vocab-grid');
+            if(grid.innerHTML !== "") return; // Cegah re-render
+            
+            vocabulary.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-item';
+                div.innerHTML = `<div class="vocab-arabic">${item.arab}</div><div style="font-weight: 500;">${item.indo}</div>`;
+                div.onclick = () => showVocabDetail(index, div);
+                grid.appendChild(div);
+            });
+        }
+
+        function showVocabDetail(index, element) {
+            document.querySelectorAll('.vocab-item').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            const item = vocabulary[index];
+            const feedback = document.getElementById('vocab-feedback');
+            
+            feedback.innerHTML = `
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">${item.icon}</div>
+                <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">${item.arab} = ${item.indo}</h3>
+                <p style="color: var(--text-dark);">${item.detail}</p>
+            `;
+            feedback.classList.remove('show');
+            void feedback.offsetWidth;
+            feedback.classList.add('show');
+        }
+
+        // --- QUIZ LOGIC ---
+        const quizData = [
+            { question: "Apa gagasan utama dari wacana di atas?", options: ["Hasan siswa yang malas.", "Macam-macam hobi Hasan.", "Cara menanam jagung.", "Pemandangan alam."], correctIndex: 1, explanation: "Teks menceritakan tentang Hasan yang memiliki berbagai hobi." },
+            { question: "أَيْنَ يَدْرُسُ حَسَنٌ؟", options: ["فِي الْمَدْرَسَةِ الِابْتِدَائِيَّةِ", "فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ", "فِي الْمَدْرَسَةِ الثَّانَوِيَّةِ", "فِي الْجَامِعَةِ"], correctIndex: 1, explanation: "Dia siswa di Madrasah Tsanawiyah (Menengah Pertama)." },
+            { question: "Tanaman apa yang ditanam Hasan di kebunnya?", options: ["الْأَرُزُّ (Padi)", "الْمَوْزُ (Pisang)", "الذُّرَةُ (Jagung)", "الْبَصَلُ (Bawang)"], correctIndex: 2, explanation: "Teks menyebutkan 'وَيَزْرَعُ الذُّرَةَ'." }
+        ];
+
+        let currentQuestion = 0, score = 0, answered = false;
+
+        function startQuiz() {
+            document.getElementById('quiz-intro').style.display = 'none';
+            document.getElementById('quiz-area').style.display = 'block';
+            currentQuestion = 0; score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const q = quizData[currentQuestion];
+            const qContainer = document.getElementById('question-container');
+            const feedbackBox = document.getElementById('quiz-feedback');
+            const nextBtn = document.getElementById('next-btn');
+            
+            feedbackBox.className = 'feedback-box'; feedbackBox.innerHTML = ''; nextBtn.disabled = true;
+            document.getElementById('question-counter').innerText = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, index) => {
+                optionsHtml += `
+                    <li class="option-item" id="opt-item-${index}">
+                        <label class="option-label">
+                            <input type="radio" name="quiz-option" class="option-input" value="${index}" onclick="checkAnswer(${index})">
+                            <span class="option-text">${opt}</span>
+                        </label>
+                    </li>
+                `;
+            });
+
+            qContainer.innerHTML = `
+                <h3 style="margin-bottom: 1rem; color: var(--text-dark);">${currentQuestion + 1}. ${q.question}</h3>
+                <ul class="options-list">${optionsHtml}</ul>
+            `;
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+            const q = quizData[currentQuestion];
+            const feedbackBox = document.getElementById('quiz-feedback');
+            const nextBtn = document.getElementById('next-btn');
+            
+            document.querySelectorAll('.option-input').forEach(input => input.disabled = true);
+            const isCorrect = selectedIndex === q.correctIndex;
+            const selectedItem = document.getElementById(`opt-item-${selectedIndex}`);
+            const correctItem = document.getElementById(`opt-item-${q.correctIndex}`);
+
+            if (isCorrect) {
+                score += (100 / quizData.length);
+                selectedItem.classList.add('correct');
+                feedbackBox.className = 'feedback-box show success';
+                feedbackBox.innerHTML = `<strong>✅ Benar!</strong><br>${q.explanation}`;
+            } else {
+                selectedItem.classList.add('wrong');
+                correctItem.classList.add('correct');
+                feedbackBox.className = 'feedback-box show error';
+                feedbackBox.innerHTML = `<strong>❌ Kurang Tepat.</strong><br>${q.explanation}`;
+            }
+
+            nextBtn.innerText = (currentQuestion === quizData.length - 1) ? "Lihat Hasil 🏆" : "Selanjutnya ➡️";
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-area').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            
+            const scoreDisplay = document.getElementById('final-score');
+            const scoreMsg = document.getElementById('score-message');
+            const finalScore = Math.round(score);
+            
+            scoreDisplay.innerText = finalScore;
+            
+            if (finalScore >= 80) {
+                scoreMsg.innerText = "🌟 Mumtaz! Pemahaman Anda sangat luar biasa.";
+                scoreMsg.style.color = "var(--success-color)";
+            } else {
+                scoreMsg.innerText = "📚 Mari baca ulang materinya dan coba lagi.";
+                scoreMsg.style.color = "var(--secondary-color)";
+            }
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('quiz-intro').style.display = 'block';
+        }
+
+        // --- EDIT SISWA LOGIC ---
+        function openEditModal() {
+            document.getElementById('edit-siswa-modal').classList.add('active');
+            loadAdminClassData(); // Muat data kelas 7A secara otomatis saat dibuka pertama kali
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-siswa-modal').classList.remove('active');
+        }
+
+        function loadAdminClassData() {
+            const kelas = document.getElementById('admin-kelas-select').value;
+            const grid = document.getElementById('admin-students-grid');
+            grid.innerHTML = ''; // Kosongkan grid sebelumnya
+
+            const daftarNama = dataSiswa[kelas] || [];
+            
+            // Generate 30 textbox (kolom input)
+            for (let i = 0; i < 30; i++) {
+                const nama = daftarNama[i] || "";
+                
+                const div = document.createElement('div');
+                div.className = 'form-group';
+                div.style.marginBottom = '0';
+                
+                div.innerHTML = `
+                    <label style="font-size: 0.8rem; margin-bottom: 0.2rem; color: var(--text-light);">Siswa ${i + 1}</label>
+                    <input type="text" class="form-control admin-student-input" style="padding: 0.5rem;" value="${nama}" placeholder="Kosongkan jika tidak ada...">
+                `;
+                grid.appendChild(div);
+            }
+        }
+
+        function saveAdminData() {
+            const kelas = document.getElementById('admin-kelas-select').value;
+            const inputs = document.querySelectorAll('.admin-student-input');
+            const newData = [];
+            
+            // Ambil semua teks dari 30 input box yang ada
+            inputs.forEach(input => {
+                newData.push(input.value.trim()); // trim() menghapus spasi kosong di awal/akhir
+            });
+            
+            // Perbarui data pada memori aplikasi
+            dataSiswa[kelas] = newData;
+
+            // SIMPAN KE LOCAL STORAGE (Menjadikan data permanen di browser)
+            localStorage.setItem('siswaDataObj', JSON.stringify(dataSiswa));
+            
+            // Animasi tombol Sukses
+            const btn = document.getElementById('btn-save-admin');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✅ Berhasil Disimpan!';
+            btn.style.backgroundColor = 'var(--success-color)';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.backgroundColor = 'var(--primary-color)';
+                closeEditModal();
+                
+                // Segarkan dropdown pilihan nama di cover page jika sedang di kelas yang sama
+                const coverKelas = document.getElementById('cover-kelas').value;
+                if(coverKelas === kelas) {
+                    populateStudents();
+                }
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
